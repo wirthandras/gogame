@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.Random;
 
 // robot játék logika pont szerzésre
+// andris kommentje
 public class GoGame {
 
 	private static int size;
