@@ -1,6 +1,11 @@
 package gogame;
 
 import java.util.Scanner;
+
+import gogame.demo.Coordinate;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 // robot játék logika pont szerzésre
@@ -9,6 +14,7 @@ public class GoGame {
 
 	private static int size;
 	private static int[][] goTable;
+	private static List<Coordinate> maxCoordinates = new ArrayList<>();
 	private final static int endOfGame = 20;
 	private static int pointsOfPlayer1;
 	private static int pointsOfPlayer2;
@@ -145,8 +151,7 @@ public class GoGame {
 				print();
 
 			} else {
-				System.out.println("Reserved place" + i +"__"+ j);
-				
+				System.out.println("Reserved place" + i + "__" + j);
 
 				result = scan(actualPlayer, gameMethod);
 			}
@@ -241,29 +246,52 @@ public class GoGame {
 					va = vdown + vup + vrigth + vleft;
 					ci = ri;
 					cj = rj;
-				}
 
-				if (vl <= va) {
+					Coordinate A1 = new Coordinate(ci, cj);
+					if (vl == va) {
+						maxCoordinates.add(A1);
 
-					li = ci;
-					lj = cj;
-
-					vl = va;
-				}
-				if (vl == va) {
-
-					Random rcell = new Random();
-					int rc = 0;
-					rc = rcell.nextInt(2);
-
-					if (rc == 0) {
-
-						li = ci;
-						lj = cj;
-
+					}
+					if (vl < va) {
+						maxCoordinates.clear();
+						maxCoordinates.add(A1);
 						vl = va;
 					}
+					
 				}
+
+				int listSize = maxCoordinates.size();
+				Random NrOfList = new Random();
+				int NrOfLi = 0;
+				NrOfLi = NrOfList.nextInt(listSize);
+				Coordinate randomizedCoordinate = maxCoordinates.get(NrOfLi);
+				
+				li = randomizedCoordinate.i;
+				lj = randomizedCoordinate.j;
+				
+				
+				
+//				if (vl <= va) {
+//
+//					li = ci;
+//					lj = cj;
+//
+//					vl = va;
+//				}
+//				if (vl == va) {
+//
+//					Random rcell = new Random();
+//					int rc = 0;
+//					rc = rcell.nextInt(2);
+//
+//					if (rc == 0) {
+//
+//						li = ci;
+//						lj = cj;
+//
+//						vl = va;
+//					}
+//				}
 
 			}
 		}
@@ -272,6 +300,21 @@ public class GoGame {
 		j = lj;
 	}
 
+	/*
+	 * Coordinate A1 = new Coordinate (ci,cj);
+	 *  maxCoordinates.add(A1);
+	 * maxCoordinates.get(2);
+	 *  maxCoordinates.size();
+	 *  maxCoordinates.clear();
+	 * maxCoordinates.remove(3);
+	 *  for (Coordinate actual : maxCoordinates) {
+	 * 
+	 * int value = actual.i;
+	 * 
+	 * }
+	 */
+	
+	
 	private static int cellValue(int next1value, int next2value) {
 
 		int v1 = 0;
